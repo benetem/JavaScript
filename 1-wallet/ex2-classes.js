@@ -3,12 +3,17 @@ import eurosFormatter from './euroFormatter.js';
 class Wallet {
   #name;
   #cash;
+  #dailyAllowance;
+  #dailyTotalWithdrawals;
+
 
   constructor(name, cash) {
     this.#name = name;
     this.#cash = cash;
-  }
+    this.#dailyAllowance = 40;
+    this.#dailyTotalWithdrawals = 0;
 
+  }
   get name() {
     return this.#name;
   }
@@ -22,6 +27,12 @@ class Wallet {
       console.log(`Insufficient funds!`);
       return 0;
     }
+
+    if (this.#dailyTotalWithdrawals + amount > this.#dailyAllowance) {
+      console.log(`Insufficient remaining daily allowance!`);
+      return 0;
+    }
+
 
     this.#cash -= amount;
     return amount;

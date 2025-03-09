@@ -10,6 +10,11 @@ function withdraw(amount) {
     return 0;
   }
 
+  if (this._dailyTotalWithdrawals + amount > this._dailyAllowance) {
+    console.log(`Insufficient remaining daily allowance!`);
+    return 0;
+  }
+
   this._cash -= amount;
   return amount;
 }

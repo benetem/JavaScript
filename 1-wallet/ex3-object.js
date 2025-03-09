@@ -4,6 +4,8 @@ function createWallet(name, cash = 0) {
   return {
     _name: name,
     _cash: cash,
+    _dailyAllowance: 40,
+    _dailyTotalWithdrawals: 0,
 
     deposit: function (amount) {
       this._cash += amount;
@@ -12,6 +14,11 @@ function createWallet(name, cash = 0) {
     withdraw: function (amount) {
       if (this._cash - amount < 0) {
         console.log(`Insufficient funds!`);
+        return 0;
+      }
+
+      if (this._dailyTotalWithdrawals + amount > this._dailyAllowance) {
+        console.log(`Insufficient remaining daily allowance!`);
         return 0;
       }
 
